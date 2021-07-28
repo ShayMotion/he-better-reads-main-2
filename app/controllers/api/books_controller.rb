@@ -1,6 +1,6 @@
 module API
   class BooksController < ApplicationController
-    
+    before_action :find_book, only: [:show, :edit, :update, :destroy]
     def index
       render json: Book.all
     end
@@ -20,7 +20,6 @@ module API
     end
 
     def show
-      render json: Book.find(params[:id])
     end
 
     def update
@@ -44,5 +43,8 @@ module API
         :title
       )
     end
+
+    def find_book
+      render json: Book.find(params[:id])
   end
 end
