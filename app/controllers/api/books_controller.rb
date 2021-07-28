@@ -1,5 +1,14 @@
 module API
   class BooksController < ApplicationController
+    
+    def index
+      render json: Book.all
+    end
+
+    def new
+      book = Book.new
+    end
+    
     def create
       book = Book.new(allowed_params)
 
@@ -8,10 +17,6 @@ module API
       else
         render json: { errors: book.errors.full_messages }
       end
-    end
-
-    def index
-      render json: Book.all
     end
 
     def show
