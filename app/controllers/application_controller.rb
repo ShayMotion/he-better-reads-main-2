@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  rescue_from ActiveRecord::RecordNotFound do
-    head :not_found
+  protect_from_forgery with: :exception
   end
 end

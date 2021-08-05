@@ -22,12 +22,21 @@ module API
     def show
     end
 
+    def edit
+    end
+
+    def destroy
+      @book.destroy
+      redirect_to root_path
+    end
+
     def update
       book = Book.find(params[:id])
 
       if book.update(allowed_params)
         render json: book
       else
+
         render json: { errors: book.errors.full_messages }
       end
     end
@@ -47,4 +56,6 @@ module API
     def find_book
       render json: Book.find(params[:id])
   end
+end
+
 end

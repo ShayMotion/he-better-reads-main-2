@@ -1,14 +1,23 @@
 class ReviewsController < ApplicationController
+  before_action :find_book
+  before_action :find_review, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit]
+
+  def new
+    @review = Review.new
+    render json: @reviews
+  end
 
     def index
-     render json: Review.all
+      @reviews = Review.all
+     render json: @reviews
     end
 
     def create
-        review = Review.new(allowed_params)
+        @review = Review.new(allowed_params)
   
-        if review.save
-          render json: review
+        if @review.save
+          render json: @review
         else
           render json: { errors: review.errors.full_messages }
         end
@@ -19,14 +28,18 @@ class ReviewsController < ApplicationController
         end
  
         def update
-            review = Review.find(params[:id])
+            @review = Review.find(params[:id])
       
             if review.update(allowed_params)
-              render json: review
+              render json: @review
             else
               render json: { errors: review.errors.full_messages }
             end
           end
+
+        def destroy
+            @review.destroy
+        end
 
 
         private
